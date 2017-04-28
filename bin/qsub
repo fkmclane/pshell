@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "$HOSTNAME" == "user001" ]; then
+	exec /opt/pbs/default/bin/"$(basename "$0")" "$@"
+else
+	exec ssh user001 'cd '"$(pwd)"'; '"$0"' '"$@"
+fi

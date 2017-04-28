@@ -1,0 +1,4 @@
+#!/bin/sh
+clear
+while tput cup 0 0 && qstat $(qsub "$@"); do sleep 1; done
+clear
