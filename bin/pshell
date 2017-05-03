@@ -6,9 +6,11 @@ if [ "$HOSTNAME" == "user001" ]; then
 		args="-l walltime=1:00:00"
 	fi
 
-	qsub $args -o /dev/null -j oe "$@" -- "$HOME"/.local/bin/pshell "$DISPLAY"
-	until tmux has-session 2>/dev/null; do sleep 1; done
-	exec tmux attach
+	jobid="$(echo "$(qsub $args -o /dev/null -j oe "$@" -- "$HOME"/.local/bin/pshell "$DISPLAY")" | cut -d. -f1)"
+	echo "Job ID: $jobid"
+	until tmux has-session -t "$jobid" 2>/dev/null; do sleep 1; done
+	exec tmux attach -t "$jobid"
 else
-	exec ssh -R 4444:localhost:22 user001 export DISPLAY="$1"\; tmux new-session -d ssh -p 4444 localhost\; while tmux has-session 2\>/dev/null \; do sleep 1\; done
+	jobid="$(echo "$PBS_JOBID" | cut -d. -f1)"
+	exec ssh -R 4444:localhost:22 user001 export DISPLAY="$1"\; tmux new-session -s "$jobid" -d ssh -p 4444 localhost\; while tmux has-session -t "$jobid" 2\>/dev/null \; do sleep 1\; done
 fi
