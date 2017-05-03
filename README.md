@@ -8,6 +8,8 @@ Installation
 ============
 
 ```sh
+$ qsub -I
+$ cd <source directory>
 $ make install
 ```
 
