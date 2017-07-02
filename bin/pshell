@@ -13,7 +13,7 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 		sleep 1
 	done
 
-	exec tmux new-session -s "$jobid" -d ssh "$(<"$HOME"/.cache/pshell/"$jobid")"
+	exec tmux new-session -s "$jobid" ssh -o StrictHostKeyChecking=no "$(<"$HOME"/.cache/pshell/"$jobid")"
 else
 	jobid="$(echo "$PBS_JOBID" | cut -d. -f1)"
 
