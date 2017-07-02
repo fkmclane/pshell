@@ -11,6 +11,7 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 
 	while [ ! -f "$HOME"/.cache/pshell/"$jobid" ]; do
 		sleep 1
+		touch "$HOME"/.cache/pshell/
 	done
 
 	exec tmux new-session -s "$jobid" ssh -o StrictHostKeyChecking=no "$(<"$HOME"/.cache/pshell/"$jobid")"
