@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ "$HOSTNAME" == "user001" ]; then
+if [ "$HOSTNAME" == "osg-ce" ]; then
 	exec /opt/pbs/default/bin/"$(basename "$0")" "$@"
 else
-	exec ssh user001 'cd '"$(pwd)"'; '"$0"' '"$@"
+	exec ssh osg-ce 'cd '"$(pwd)"'; '"$0"' '"$@"
 fi
