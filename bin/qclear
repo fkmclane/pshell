@@ -1,0 +1,2 @@
+#!/bin/sh
+exec qstat | grep "$USER" | cut -d' ' -f1 | xargs qdel &>/dev/null
