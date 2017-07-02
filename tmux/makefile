@@ -1,5 +1,5 @@
 PREFIX=$(HOME)/.local
-VERSION=2.4
+VERSION=2.5
 
 install:
 	curl -L https://github.com/tmux/tmux/releases/download/$(VERSION)/tmux-$(VERSION).tar.gz | tar xz
