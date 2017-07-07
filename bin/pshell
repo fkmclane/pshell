@@ -14,14 +14,16 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 		touch "$HOME"/.cache/pshell/
 	done
 
-	exec tmux new-session -s "$jobid" ssh -o StrictHostKeyChecking=no "$(<"$HOME"/.cache/pshell/"$jobid")"
+	exec tmux new-session -s "$jobid" ssh -o StrictHostKeyChecking=no "$(<"$HOME"/.cache/pshell/"$jobid")" bash --rcfile "$HOME"/.cache/pshell/"$jobid".env
 else
 	jobid="$(echo "$PBS_JOBID" | cut -d. -f1)"
 
 	mkdir -p "$HOME"/.cache/pshell
 	echo "$HOSTNAME" >"$HOME"/.cache/pshell/"$jobid"
+	env | sed 's/^/export /' >"$HOME"/.cache/pshell/"$jobid".env
+	echo "source \"$HOME\"/.bashrc" >>"$HOME"/.cache/pshell/"$jobid".env
 
-	trap "rm \"$HOME\"/.cache/pshell/\"$jobid\"" TERM
+	trap "rm \"$HOME\"/.cache/pshell/\"$jobid\"{,.env}" TERM
 
 	exec sleep infinity
 fi
