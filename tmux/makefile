@@ -13,6 +13,6 @@ install:
 	[ -e "$(HOME)/.tmux.conf" ] || cp tmux.conf "$(HOME)/.tmux.conf"
 
 clean:
-	rm -r tmux-* libevent-*
+	rm -rf tmux-* libevent-*
 
 .PHONY: install clean
