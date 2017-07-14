@@ -7,9 +7,9 @@ install:
 	curl -L https://github.com/tmux/tmux/releases/download/$(VERSION)/tmux-$(VERSION).tar.gz | tar xz
 	curl -L https://github.com/tmux/tmux/releases/download/$(VERSION)/tmux-$(VERSION).tar.gz | tar xz
 	mkdir -p $(PREFIX)
-	pushd libevent-$(VERSION)-stable && ./configure --prefix=$(PREFIX) && popd
-	make -C libevent-$(VERSION)-stable install
-	pushd tmux-$(VERSION) && ./configure --prefix=$(PREFIX) && popd
+	pushd libevent-$(LIBEVENT_VERSION)-stable && ./configure --prefix=$(PREFIX) && popd
+	make -C libevent-$(LIBEVENT_VERSION)-stable install
+	pushd tmux-$(VERSION) && LD_LIBRARY_PATH=$(HOME)/.local/lib ./configure --prefix=$(PREFIX) && popd
 	make -C tmux-$(VERSION) install
 	[ -e "$(HOME)/.tmux.conf" ] || cp tmux.conf "$(HOME)/.tmux.conf"
 
