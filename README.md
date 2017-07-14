@@ -13,6 +13,8 @@ $ cd <source directory>
 $ make install
 ```
 
+Log out and back in to update environment.
+
 
 Usage
 =====
