@@ -8,7 +8,7 @@ install:
 	mkdir -p $(PREFIX)
 	pushd libevent-$(LIBEVENT_VERSION)-stable && ./configure --prefix=$(PREFIX) && popd
 	make -C libevent-$(LIBEVENT_VERSION)-stable install
-	pushd tmux-$(VERSION) && LDFLAGS=-L$(HOME)/.local/lib ./configure --prefix=$(PREFIX) && popd
+	pushd tmux-$(VERSION) && CPPFLAGS=-I$(HOME)/.local/lib LDFLAGS=-L$(HOME)/.local/lib ./configure --prefix=$(PREFIX) && popd
 	make -C tmux-$(VERSION) install
 	[ -e "$(HOME)/.tmux.conf" ] || cp tmux.conf "$(HOME)/.tmux.conf"
 
