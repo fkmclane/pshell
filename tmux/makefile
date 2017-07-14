@@ -3,7 +3,7 @@ VERSION=2.5
 LIBEVENT_VERSION=2.1.8
 
 install:
-	curl -L https://github.com/libevent/libevent/releases/download/release-$(LIBEVENT_VERSION)-stable/libevent-$(LIBEVENT_VERSOIN)-stable.tar.gz | tar xz
+	curl -L https://github.com/libevent/libevent/releases/download/release-$(LIBEVENT_VERSION)-stable/libevent-$(LIBEVENT_VERSION)-stable.tar.gz | tar xz
 	curl -L https://github.com/tmux/tmux/releases/download/$(VERSION)/tmux-$(VERSION).tar.gz | tar xz
 	curl -L https://github.com/tmux/tmux/releases/download/$(VERSION)/tmux-$(VERSION).tar.gz | tar xz
 	mkdir -p $(PREFIX)
