@@ -2,5 +2,5 @@
 if [ "$HOSTNAME" == "osg-ce" ] || [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	exec /opt/pbs/default/bin/"$(basename "$0")" "$@"
 else
-	exec ssh -x osg-ce 'cd '"$(pwd)"'; '"$0"' '"$@"
+	exec ssh -x osg001 'cd '"$(pwd)"'; '"$0"' '"$@"
 fi
