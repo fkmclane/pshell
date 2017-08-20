@@ -2,7 +2,7 @@
 if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	exec /opt/pbs/default/bin/"$(basename "$0")" "$@"
 else
-	exec socat - unix:/tmp/"$PBS_JOBID".sock <<EOF
+	exec socat - unix:/tmp/"$(<"$HOME"/.cache/pshell/"$jobid")".sock <<EOF
 cd "$(pwd)"
 "$0"$(for arg in "$@"; do echo -n " \"$arg\""; done)
 EOF
