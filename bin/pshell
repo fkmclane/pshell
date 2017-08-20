@@ -15,8 +15,11 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	done
 
 	socat unix-listen:/tmp/"$jobid".sock,fork exec:bash,stderr &
+	scpid="$!"
 
-	exec tmux new-session -s "$jobid" ssh -R /tmp/"$jobid".sock:/tmp/"$jobid".sock -o StrictHostKeyChecking=no -t "$(<"$HOME"/.cache/pshell/"$jobid")" bash --rcfile "$HOME"/.cache/pshell/"$jobid".env
+	chmod 700 /tmp/"$jobid".sock
+
+	exec tmux new-session -s "$jobid" "ssh -R /tmp/'$jobid'.sock:/tmp/'$jobid'.sock -o StrictHostKeyChecking=no -t '$(<"$HOME"/.cache/pshell/"$jobid")' bash --rcfile '$HOME'/.cache/pshell/'$jobid'.env ; kill $scpid ; rm /tmp/'$jobid'.sock ; rm '$HOME'/.cache/pshell/'$jobid'{,.env}"
 else
 	jobid="$(echo "$PBS_JOBID" | cut -d. -f1)"
 
@@ -26,7 +29,7 @@ else
 	env | sed 's/^/export /' >>"$HOME"/.cache/pshell/"$jobid".env
 	echo "source \"$HOME\"/.bash_profile" >>"$HOME"/.cache/pshell/"$jobid".env
 
-	trap "rm \"$HOME\"/.cache/pshell/\"$jobid\"{,.env}" TERM
-
-	exec sleep infinity
+	while [ -e "$HOME"/.cache/pshell/"$jobid" ]; do
+		sleep 60
+	done
 fi
