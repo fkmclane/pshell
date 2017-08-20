@@ -1,6 +1,9 @@
 #!/bin/sh
-if [ "$HOSTNAME" == "osg-ce" ] || [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
+if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	exec /opt/pbs/default/bin/"$(basename "$0")" "$@"
 else
-	exec ssh -x osg001 'cd '"$(pwd)"'; '"$0"' '"$@"
+	exec socat - unix:/tmp/"$PBS_JOBID".sock <<EOF
+cd "$(pwd)"
+"$0"$(for arg in "$@"; do echo -n " \"$arg\""; done)
+EOF
 fi

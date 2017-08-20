@@ -14,7 +14,9 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 		touch "$HOME"/.cache/pshell/
 	done
 
-	exec tmux new-session -s "$jobid" ssh -o StrictHostKeyChecking=no -t "$(<"$HOME"/.cache/pshell/"$jobid")" bash --rcfile "$HOME"/.cache/pshell/"$jobid".env
+	socat unix-listen:/tmp/"$jobid".sock,fork exec:bash &
+
+	exec tmux new-session -s "$jobid" ssh -R /tmp/"$jobid".sock:/tmp/"$jobid".sock -o StrictHostKeyChecking=no -t "$(<"$HOME"/.cache/pshell/"$jobid")" bash --rcfile "$HOME"/.cache/pshell/"$jobid".env
 else
 	jobid="$(echo "$PBS_JOBID" | cut -d. -f1)"
 
