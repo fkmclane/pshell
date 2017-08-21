@@ -17,6 +17,10 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	socat unix-listen:/tmp/"$jobid".sock,fork exec:bash,stderr &
 	scpid="$!"
 
+	while [ ! -f /tmp/"$jobid".sock ]; do
+		sleep 1
+	done
+
 	chmod 700 /tmp/"$jobid".sock
 
 	exec tmux new-session -s "$jobid" "ssh -R /tmp/'$jobid'.sock:/tmp/'$jobid'.sock -o StrictHostKeyChecking=no -t '$(<"$HOME"/.cache/pshell/"$jobid")' bash --rcfile '$HOME'/.cache/pshell/'$jobid'.env ; kill $scpid ; rm /tmp/'$jobid'.sock ; rm '$HOME'/.cache/pshell/'$jobid'{,.env}"
@@ -29,7 +33,7 @@ else
 	env | sed 's/^/export /' >>"$HOME"/.cache/pshell/"$jobid".env
 	echo "source \"$HOME\"/.bash_profile" >>"$HOME"/.cache/pshell/"$jobid".env
 
-	while [ -e "$HOME"/.cache/pshell/"$jobid" ]; do
+	while [ -f "$HOME"/.cache/pshell/"$jobid" ]; do
 		sleep 60
 	done
 fi
