@@ -35,5 +35,6 @@ else
 
 	while [ -f "$HOME"/.cache/pshell/"$jobid" ]; do
 		sleep 60
+		touch "$HOME"/.cache/pshell/
 	done
 fi
