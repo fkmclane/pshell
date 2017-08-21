@@ -17,7 +17,7 @@ if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
 	socat unix-listen:/tmp/"$jobid".sock,fork exec:bash,stderr &
 	scpid="$!"
 
-	while [ ! -f /tmp/"$jobid".sock ]; do
+	while [ ! -S /tmp/"$jobid".sock ]; do
 		sleep 1
 	done
 
