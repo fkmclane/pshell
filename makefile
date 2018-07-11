@@ -5,8 +5,10 @@ install:
 	mkdir -p "$(HOME)/.local/bin"
 	cp -a bin/{pshell,qsub,qwait,qalter,qdel,qhold,qmgr,qorder,qrls,qselect} "$(HOME)/.local/bin"
 	make -C tmux install
+	make -C socat install
 
 clean:
 	make -C tmux clean
+	make -C socat clean
 
 .PHONY: install clean

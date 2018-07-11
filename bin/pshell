@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ "$HOSTNAME" == "login001.palmetto.clemson.edu" ]; then
+if [ "$HOSTNAME" == "login001" ]; then
 	if [ -n "$1" ]; then
 		args="$@"
 	else
