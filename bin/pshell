@@ -9,6 +9,7 @@ if [ "$HOSTNAME" == "login001" ]; then
 	jobid="$(echo "$(qsub $args -o /dev/null -j oe "$@" -- "$HOME"/.local/bin/pshell "$DISPLAY")" | cut -d. -f1)"
 	echo "Job ID: $jobid"
 
+	mkdir -p "$HOME"/.cache/pshell
 	while [ ! -f "$HOME"/.cache/pshell/"$jobid" ]; do
 		sleep 1
 		touch "$HOME"/.cache/pshell/

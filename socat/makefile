@@ -1,5 +1,5 @@
 PREFIX?=$(HOME)/.local
-VERSION?=1.7.3.0
+VERSION?=1.7.3.3
 
 install:
 	[ -e socat-$(VERSION) ] || curl -L http://www.dest-unreach.org/socat/download/socat-$(VERSION).tar.gz | tar xz

@@ -1,5 +1,5 @@
 PREFIX?=$(HOME)/.local
-VERSION?=2.5
+VERSION?=2.8
 LIBEVENT_VERSION?=2.1.8
 
 install:
